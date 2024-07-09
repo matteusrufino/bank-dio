@@ -27,23 +27,31 @@ while True:
             print("Valor inválido, não é possível depositar!")
        
     elif opcao == "2":
-        if numero_saques < LIMITE_SAQUES:
-            valor_saque = float(input("Digite o valor a ser sacado (Limite de 500): "))
-            
-            if valor_saque <= 500:
-                
-                if valor_saque <= saldo:
-                    saldo -= valor_saque
-                    numero_saques += 1
-                    extrato += f"Saque: R$ {valor_saque:.2f}\n"
-                else:
-                    print("Saldo insuficiente, não é possível efetuar o saque.")
-            
-            else:
-                print("Valor superior a 500, não é possível efetuar o saque.")
+        valor_saque = float(input("Digite o valor a ser sacado (Limite de 500): "))
 
-        else:
+        excedeu_saldo = valor_saque > saldo
+
+        excedeu_limite = valor_saque > limite
+
+        excedeu_saques = numero_saques >= LIMITE_SAQUES
+            
+        if excedeu_saldo:
+            print("Saldo insuficiente, não é possível efetuar o saque.")
+            
+        elif excedeu_limite:
+            print("Valor superior a 500, não é possível efetuar o saque.")
+
+        elif excedeu_saques:
             print("Você alcançou o número máximo de saques hoje, volte amanhã!")
+        
+        elif valor_saque > 0:
+                
+            saldo -= valor_saque
+            numero_saques += 1
+            extrato += f"Saque: R$ {valor_saque:.2f}\n"
+        
+        else:
+            print("O valor informado é inválido, tente novamente.")
 
     elif opcao == "3":
         print("\n======================================== EXTRATO ========================================")
